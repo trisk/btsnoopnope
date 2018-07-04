@@ -1,0 +1,7 @@
+id=btsnoopnope
+name=Disable Bluetooth HCI snoop log
+version=v1
+versionCode=1
+author=jacklul
+description=Prevents creation and writing to 'btsnoop_hci.log' on some ROMs
+template=1400
