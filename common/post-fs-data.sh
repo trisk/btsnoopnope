@@ -6,11 +6,13 @@ MODDIR=${0%/*}
 # This script will be executed in post-fs-data mode
 # More info in the main Magisk thread
 
-# Prepare mount point and copy original config file
-mkdir -p $MODDIR/system/etc/bluetooth
-cp /system/etc/bluetooth/bt_stack.conf $MODDIR/system/etc/bluetooth/bt_stack.conf
+# Prepare mount point
+mkdir -p "$MODDIR/system/etc/bluetooth"
 
-# Modify the config file
-cd  $MODDIR/system/etc/bluetooth/
-sed -i '/BtSnoopExtDump/ s/true/false/' bt_stack.conf
-sed -i '/BtSnoopLogOutput/ s/true/false/' bt_stack.conf
+# Create modified copy of the config file
+sed '
+  /^BtSnoopConfigFromFile=/ s/false/true/
+  /^BtSnoopLogOutput=/ s/true/false/
+  /^BtSnoopExtDump=/ s/true/false/
+  ' /system/etc/bluetooth/bt_stack.conf \
+  >"$MODDIR/system/etc/bluetooth/bt_stack.conf"
